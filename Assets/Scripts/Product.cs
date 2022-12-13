@@ -5,9 +5,13 @@
 /// </summary>
 public abstract class Product
 {
+    #region Private Fields
+
     private int _price;
     private string _name;
     private ProductType _type;
+
+    #endregion
 
     public enum ProductType 
     {
@@ -16,6 +20,8 @@ public abstract class Product
         Food,
         Book
     }
+
+    #region Public Properties
 
     public int Price
     {
@@ -34,6 +40,8 @@ public abstract class Product
         get => _type; 
         set => _type = value;
     }
+
+    #endregion
 
     /// <summary>
     /// Constructor for product class which sets the values of instantiated object with given parameters.

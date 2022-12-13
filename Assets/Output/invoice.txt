@@ -1,0 +1,35 @@
+INVOICE 
+Ingredients: 
+Cake, Food 25TL 
+Nature, Magazine 375TL 
+Cost: 400 TL
+INVOICE 
+Ingredients: 
+Nature, Magazine 375TL 
+1984, Book 35TL 
+Cost: 410 TL
+INVOICE 
+Ingredients: 
+Cake, Food 25TL 
+Cake, Food 25TL 
+Elden Ring Soundtrack, MusicCd 150TL 
+Cost: 610 TL
+INVOICE 
+Ingredients: Cost: 
+INVOICE 
+Ingredients: 
+Nature, Magazine 375TL 
+1984, Book 35TL 
+Cost: 410 TL
+INVOICE 
+Ingredients: 
+Nature, Magazine 375TL 
+1984, Book 35TL 
+Cost: 410 TL
+INVOICE 
+Ingredients: 
+Nature, Magazine 375TL 
+Nature, Magazine 375TL 
+1984, Book 35TL 
+Cake, Food 25TL 
+Cost: 810 TL
