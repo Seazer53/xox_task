@@ -7,23 +7,94 @@ using Random = UnityEngine.Random;
 /// </summary>
 public class Player : MonoBehaviour
 {
-    public static Player instance;
+    #region Public Fields
+
+    // Booleans for checking whether player is moving, is the player close to the products section, does the player
+    // carries any product.
     public bool isMoving;
     public bool closeToProducts;
     public bool loaded;
 
+    #endregion
+
+    #region Public Properties
+
+    public static Player Instance { get; private set; }
+
+    #endregion
+
+    #region MonoBehaviour Callbacks
+
     private void Awake()
     {
-        if (instance == null)
-        {
-            instance = this;
-        }
+        // If there is an instance, and it's not me, delete myself.
+        if (Instance != null && Instance != this) 
+        { 
+            Destroy(this); 
+        } 
+        
+        else 
+        { 
+            Instance = this; 
+        } 
     }
 
     private void Start()
     {
         StartCoroutine(LerpPosition(new Vector3(2f, transform.position.y, 0f), 3f));
     }
+
+    #endregion
+
+    #region Private Methods
+
+    /// <summary>
+    /// Triggers when the selected product collides with Player's collider and sets the product info and attach the product
+    /// randomised point on the player.
+    /// </summary>
+    /// <param name="other">Selected product which has just collided with Player</param>
+    private void OnTriggerEnter2D(Collider2D other)  
+    {
+        Debug.Log("collision "+other.name);
+        ShoppingCart.Instance.productGameObjects.Add(other.gameObject);
+        
+        Transform selectedTransform = other.transform;
+        selectedTransform.position = transform.position + new Vector3(Random.Range(0f, 2f), Random.Range(0f, 2f), 0f);
+        selectedTransform.parent = transform;
+
+        other.gameObject.GetComponent<BoxCollider2D>().enabled = false;
+
+        if (other.gameObject.CompareTag("Food"))
+        {
+            Product food = new Food(25, "Cake", Product.ProductType.Food);
+            ShoppingCart.Instance.products.Add(food);
+        }
+        
+        else if (other.gameObject.CompareTag("Book"))
+        {
+            Product book = new Book(35, "1984", Product.ProductType.Book);
+            ShoppingCart.Instance.products.Add(book);
+        }
+        
+        else if (other.gameObject.CompareTag("MusicCd"))
+        {
+            Product musicCd = new MusicCd(150, "Elden Ring Soundtrack", Product.ProductType.MusicCd);
+            ShoppingCart.Instance.products.Add(musicCd);
+        }
+        
+        else if (other.gameObject.CompareTag("Magazine"))
+        {
+            Product magazine = new Magazine(375, "Nature", Product.ProductType.Magazine);
+            ShoppingCart.Instance.products.Add(magazine);
+        }
+        
+        ShoppingCart.Instance.productSelected = false;
+        loaded = true;
+    }
+
+    #endregion
+
+    #region Public Methods
 
     /// <summary>
     /// Moves the gameObject back and forth with given positions and duration.
@@ -55,48 +126,6 @@ public class Player : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Triggers when the selected product collides with Player's collider and sets the product info and attach the product
-    /// randomised point on the player.
-    /// </summary>
-    /// <param name="other">Selected product which has just collided with Player</param>
-    private void OnTriggerEnter2D(Collider2D other)  
-    {
-        Debug.Log("collision "+other.name);
-        ShoppingCart.instance.productGameObjects.Add(other.gameObject);
-        
-        Transform selectedTransform = other.transform;
-        selectedTransform.position = transform.position + new Vector3(Random.Range(0f, 2f), Random.Range(0f, 2f), 0f);
-        selectedTransform.parent = transform;
+    #endregion
 
-        other.gameObject.GetComponent<BoxCollider2D>().enabled = false;
-
-        if (other.gameObject.CompareTag("Food"))
-        {
-            Product food = new Food(25, "Cake", Product.ProductType.Food);
-            ShoppingCart.instance.products.Add(food);
-        }
-        
-        else if (other.gameObject.CompareTag("Book"))
-        {
-            Product book = new Book(35, "1984", Product.ProductType.Book);
-            ShoppingCart.instance.products.Add(book);
-        }
-        
-        else if (other.gameObject.CompareTag("MusicCd"))
-        {
-            Product musicCd = new Food(150, "Elden Ring Soundtrack", Product.ProductType.MusicCd);
-            ShoppingCart.instance.products.Add(musicCd);
-        }
-        
-        else if (other.gameObject.CompareTag("Magazine"))
-        {
-            Product magazine = new Magazine(375, "Nature", Product.ProductType.Magazine);
-            ShoppingCart.instance.products.Add(magazine);
-        }
-        
-        ShoppingCart.instance.productSelected = false;
-        loaded = true;
-    }
-    
 }
